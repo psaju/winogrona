@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css">
+    <link rel="stylesheet" href="../dist/main.css">
+</head>
+<body>
+    <div id="panel" class="flex items-center">
+        <div class="panel__devices">
+            <span>Widok</span>
+        </div>
+        <div class="panel__actions">
+
+        </div>
+        <div class="panel__tabs flex">
+            <a class="tab btn btn-primary" onclick="openTab(event, 'blocks')">Komponenty</a>
+            <a class="tab btn" onclick="openTab(event, 'style-manager')">Ustawienia</a>
+        </div>
+    </div>
+
+    <div id="content" class="flex">
+        <div class="w-9/12">
+            
+            <div id="gjs"></div>
+        </div>
+        
+        <div id="sidebar" class="w-3/12">
+            
+            <div id="blocks" class="tabcontent" style="display: block;"></div>
+            <div id="style-manager" class="tabcontent">
+                <div id="selector-container"></div>
+                <div id="trait-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <script src="//unpkg.com/grapesjs"></script>
+    <script src="../src/scripts/plugins/grapesjs-blocks-basic.js"></script>
+    <script src="../src/scripts/plugins/grapesjs-plugin-forms.min.js"></script>
+    <script src="../src/scripts/script.js"></script>
+    <script type="module" src="../src/scripts/editor.js"></script>
+</body>
+</html>

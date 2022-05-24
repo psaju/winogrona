@@ -10,7 +10,7 @@ const otm = "open-tm";
 const ola = "open-layers";
 const obl = "open-blocks";
 
-const editor = grapesjs.init({
+export const editor = grapesjs.init({
   container: "#gjs",
   fromElement: true,
   height: "100vh",
@@ -190,35 +190,35 @@ editor.Commands.add("set-device-desktop", {
   run(editor) {
     editor.setDevice("Desktop");
   },
-  stop() {},
+  stop() { },
 });
 
 editor.Commands.add("set-device-laptop", {
   run(editor) {
     editor.setDevice("Laptop");
   },
-  stop() {},
+  stop() { },
 });
 
 editor.Commands.add("set-device-tablet", {
   run(editor) {
     editor.setDevice("Tablet");
   },
-  stop() {},
+  stop() { },
 });
 
 editor.Commands.add("set-device-mobile", {
   run(editor) {
     editor.setDevice("Mobile");
   },
-  stop() {},
+  stop() { },
 });
 
 editor.Commands.add("set-device-mobile-s", {
   run(editor) {
     editor.setDevice("Mobile-S");
   },
-  stop() {},
+  stop() { },
 });
 
 blockManager.add("big_label", {
@@ -281,20 +281,55 @@ editor.Panels.addButton('options', {
   attributes: { title: 'Undo' }
 });
 
+editor.Commands.add('open-assets', {
+  run(editor) {
+    document.querySelector('body').classList.add('loading');
+    const parser = new DOMParser();
+    const fileModal = document.getElementById('filemanager');
+    const html = '<iframe id="uploadFrame" src="/panel/cms-files.php?tiny=true&type=image&dir=product" frameborder="0"></iframe>';
+    fileModal.insertAdjacentHTML('beforeend', html);
+    document.getElementById('uploadFrame').addEventListener("load", function (e) {
+      prepareIframe();
+    });
+  }
+})
+
 editor.onReady(() => {
   blockManager.getCategories().each((ctg) => ctg.set("open", false));
   undoManager.start();
-
-  // setTimeout(function(){
-  //   const textInputs = document.querySelectorAll('#sidebar input[type="text"]');
-  //   const selects = document.querySelectorAll('#sidebar select');
-
-  //   for (const textInput of textInputs){
-  //     textInput.classList.add('input', 'input-bordered', 'input-sm');
-  //   }
-
-  //   for (const select of selects){
-  //     select.classList.add('select', 'select-sm');
-  //   }
-  // }, 1000);
 });
+
+const prepareIframe = function () {
+  document.getElementById('my-modal-3').checked = true;
+  const iframe = document.getElementById('uploadFrame');
+  const iframeContents = iframe.contentDocument || iframe.contentWindow.document;
+  const buttons = iframeContents.querySelectorAll('.formbuttons');
+
+  document.querySelector('body').classList.remove('loading');
+
+  buttons.forEach(item => {
+    item.addEventListener('click', event => {
+      const clickString = item.getAttribute('onclick');
+      clickString.replace("insertUrl('", "").replace("', '1')", "");
+      document.getElementById('my-modal-3').checked = false;
+      iframe.remove();
+    })
+  });
+
+  document.getElementById('uploadFrame').contentWindow.insertUrl = function (img) {
+    var extension = img.substr((img.lastIndexOf('.') + 1));
+
+    if (extension == 'jpg' || 'jpeg' || 'png' || 'gif') {
+      const cmp = editor.getSelected();
+      cmp.attributes.attributes.src = img;
+      cmp.set('src', img);
+      cmp.view.el.src = img;
+      cmp.setStyle({width: 'auto', height: 'auto'})
+
+      document.getElementById('my-modal-3').checked = false;
+      iframe.remove();
+    } else {
+      alert('Wybrano plik o nieobsługiwanym formacie!');
+    }
+  };
+}

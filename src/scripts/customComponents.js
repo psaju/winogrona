@@ -1,32 +1,32 @@
-export const customComponents = editor => {
-    editor.DomComponents.addType('popup-wrapper', {
-      isComponent: el => el.tagName === 'popup-wrapper',
-      // Model definition
-      model: {
-        // Default properties
-        defaults: {
-          tagName: 'popup-wrapper',
-          draggable: true, 
-          droppable: true, 
-          stylable: true,
-          attributes: { 
-            class: 'popup'
-          },
-          components: `
+export const customComponents = (editor) => {
+  editor.DomComponents.addType("popup-wrapper", {
+    isComponent: (el) => el.tagName === "popup-wrapper",
+    // Model definition
+    model: {
+      // Default properties
+      defaults: {
+        tagName: "popup-wrapper",
+        draggable: true,
+        droppable: true,
+        stylable: true,
+        attributes: {
+          class: "popup",
+        },
+        components: `
             <div></div>
           `,
-          style: {
-            'max-width': '757px',
-            'width': 'calc(100% - 20px)',
-            'position': 'absolute',
-            'left': '50%',
-            'top': '50%',
-            'transform': 'translate(-50%, -50%)',
-            'min-height': '50px',
-            'display': 'flex',
-            'flex-wrap': 'wrap'
-          },
-          styles: `
+        style: {
+          "max-width": "757px",
+          width: "calc(100% - 20px)",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          "min-height": "50px",
+          display: "flex",
+          "flex-wrap": "wrap",
+        },
+        styles: `
               .popup img {
                 max-height: 100%;
                 max-width: 100%;
@@ -38,46 +38,138 @@ export const customComponents = editor => {
                 }
               }
             `,
-        }
-      }
-    });
-  
-    editor.DomComponents.addType('div-block', {
-      isComponent: el => el.tagName === 'div-block',
-      // Model definition
-      model: {
-        // Default properties
-        defaults: {
-          tagName: 'div-block',
-          draggable: true, 
-          droppable: true, 
-          stylable: true,
-          components: `
+      },
+    },
+  });
+
+  editor.DomComponents.addType("div-block", {
+    isComponent: (el) => el.tagName === "div-block",
+    // Model definition
+    model: {
+      // Default properties
+      defaults: {
+        tagName: "div-block",
+        draggable: true,
+        droppable: true,
+        stylable: true,
+        components: `
             <div></div>
           `,
-          style: {
-            'min-height': '50px',
-            'display': 'block',
-            'padding': '1rem'
+        style: {
+          "min-height": "50px",
+          display: "block",
+          padding: "1rem",
+        },
+      },
+    },
+  });
+
+  editor.DomComponents.addType("wrapper-1-1", {
+    isComponent: (el) => el.tagName === "wrapper-1-1",
+    model: {
+      // Default properties
+      defaults: {
+        tagName: "wrapper-1-1",
+        draggable: true,
+        droppable: true,
+        stylable: true,
+        components: [
+          {
+            type: "popup-wrapper",
+            style: "",
+            classes: ["popup"],
+            attributes: {
+              id: "ifzg",
+            },
+            components: [
+              {},
+              {
+                type: "div-block",
+                style: "",
+                attributes: {
+                  id: "ikea",
+                },
+                components: [{}],
+              },
+              {
+                type: "div-block",
+                style: "",
+                attributes: {
+                  id: "ic1m",
+                },
+                components: [{}],
+              },
+            ],
           },
-        }
-      }    
-    });
-  
-    editor.DomComponents.addType('form-1', { 
-      isComponent: el => el.tagName === 'form-1',
-      // Model definition
-      model: {
-        // Default properties
-        defaults: {
-          tagName: 'form',
-          draggable: true, 
-          droppable: true, 
-          stylable: true,
-          attributes: {
-              class: 'form'
+        ],
+        style: [
+          {
+            selectors: [],
+            selectorsAdd: ".popup img",
+            style: {
+              "max-height": "100%",
+              "max-width": "100%",
+            },
+            group: "cmp:popup-wrapper",
           },
-          components: `
+          {
+            selectors: ["popup"],
+            style: {
+              "max-width": "420px",
+            },
+            mediaText: "(max-width: 420px)",
+            atRuleType: "media",
+            group: "cmp:popup-wrapper",
+          },
+          {
+            selectors: ["#ifzg"],
+            style: {
+              "max-width": "757px",
+              width: "calc(100% - 20px)",
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              "min-height": "50px",
+              display: "flex",
+              "flex-wrap": "wrap",
+            },
+          },
+          {
+            selectors: ["#ikea"],
+            style: {
+              "min-height": "50px",
+              display: "block",
+              padding: "1rem",
+            },
+          },
+          {
+            selectors: ["#ic1m"],
+            style: {
+              "min-height": "50px",
+              display: "block",
+              padding: "1rem",
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  editor.DomComponents.addType("form-1", {
+    isComponent: (el) => el.tagName === "form-1",
+    // Model definition
+    model: {
+      // Default properties
+      defaults: {
+        tagName: "form",
+        draggable: true,
+        droppable: true,
+        stylable: true,
+        attributes: {
+          class: "form",
+        },
+        components: `
             <form action="/settings.php" method="post">
               <div class="form-group">
                 <div class="has-feedback">
@@ -97,13 +189,12 @@ export const customComponents = editor => {
               <button type="submit" id="newsletter_button_add" type="submit" class="btn --solid" value="Zapisz się">Zapisz się</button>
             </form>
           `,
-          style: {
-            'min-height': '50px',
-            'display': 'flex',
-            'padding': '1rem'
-          },
-        }
-      }  
-    })
-  }
-  
+        style: {
+          "min-height": "50px",
+          display: "flex",
+          padding: "1rem",
+        },
+      },
+    },
+  });
+};

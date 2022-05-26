@@ -1,9 +1,19 @@
 {
+  "scripts": {
+    "build": "postcss src/css/style.css -o src/css/main.css"
+  },
   "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "cssnano": "^5.1.9",
+    "postcss": "^8.4.14",
     "postcss-import": "^14.1.0",
+    "postcss-nested": "^5.0.6",
+    "postcss-nesting": "^10.1.7",
     "tailwindcss": "^3.0.24"
   },
   "dependencies": {
-    "daisyui": "^2.15.0"
+    "daisyui": "^2.15.0",
+    "postcss-cli": "^9.1.0",
+    "watch": "^1.0.2"
   }
 }

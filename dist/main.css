@@ -1072,6 +1072,43 @@ html {
   min-width: 4rem;
 }
 
+.swap {
+  position: relative;
+  display: inline-grid;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  place-content: center;
+  cursor: pointer;
+}
+
+.swap > * {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, opacity;
+}
+
+.swap input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.swap .swap-on, .swap .swap-indeterminate, .swap input:indeterminate ~ .swap-on {
+  opacity: 0;
+}
+
+.swap input:checked ~ .swap-off, .swap.swap-active .swap-off, .swap input:indeterminate ~ .swap-off {
+  opacity: 0;
+}
+
+.swap input:checked ~ .swap-on, .swap-active .swap-on, .swap input:indeterminate ~ .swap-indeterminate {
+  opacity: 1;
+}
+
 .tab {
   position: relative;
   display: inline-flex;
@@ -2364,12 +2401,12 @@ body[dir="rtl"] .checkbox:checked,
   max-width: 64rem;
 }
 
-.flex-auto {
-  flex: 1 1 auto;
-}
-
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
 }
 
 .flex-shrink-0 {
@@ -2573,7 +2610,7 @@ body[dir="rtl"] .checkbox:checked,
 }
 
 :root {
-  --br: .75rem;
+  --br: 5px;
 }
 
 div#ioqe {
@@ -2587,18 +2624,15 @@ body {
 
 body {
   padding: 1rem;
-  background-image: radial-gradient(hsl(var(--n)) 1px, transparent 0);
-  background-size: 10px 10px;
-  background-position: -19px -19px;
+  background: #EFEFEF 0% 0% no-repeat padding-box;
+  /* background-image: radial-gradient(hsl(var(--n)) 1px, transparent 0);
+    background-size: 10px 10px;
+    background-position: -19px -19px; */
 }
 
 #content {
   gap: 1rem;
-}
-
-#content #sidebar {
-  background-color: #fff;
-  border-radius: var(--br);
+  font-family: 'Roboto', sans-serif;
 }
 
 .gjs-cv-canvas {
@@ -2611,6 +2645,24 @@ body {
   background-color: #fff;
   border-radius: var(--br);
   padding: 10px
+}
+
+#panel,
+.panel__tabs,
+.tab {
+  height: 50px;
+}
+
+.tab.active {
+  background-color: #fff;
+  border-color: #fff;
+  color: hsl(var(--p));
+}
+
+#panel, 
+#gjs,
+.tab.active {
+  box-shadow: 0px 3px 6px #00000029;
 }
 
 .panel__tabs>*+* {
@@ -2922,4 +2974,8 @@ body.loading:after{
 
 .gjs-selected {
   outline-color: hsl(var(--p)) !important;
+}
+
+.undo {
+  font-size: .9rem;
 }

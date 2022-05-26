@@ -16,6 +16,7 @@ export const editor = grapesjs.init({
   height: "100vh",
   width: "auto",
   storageManager: false,
+  allowScripts: 1,
   i18n: {
     locale: pl,
     localeFallback: 'en',
@@ -25,8 +26,16 @@ export const editor = grapesjs.init({
     embedAsBase64: true,
     uploadFile: false,
   },
+  canvasCss: ` 
+  .gjs-selected {
+      outline: 2px solid #14b8a6 !important;
+   }
+   .gjs-hovered {
+      outline: 1px solid #14b8a6 !important;
+    }
+`,
   selectorManager: { componentFirst: true },
-  plugins: ["gjs-blocks-basic", "grapesjs-plugin-forms", customComponents],
+  plugins: [customComponents],
   panels: {
     defaults: [
       {
@@ -55,28 +64,47 @@ export const editor = grapesjs.init({
         ],
       },
       {
-        id: "options",
-        el: ".panel__actions",
+        id: "panel-grid",
+        el: ".panel__grid",
         buttons: [
           {
             active: true,
             id: swv,
             label: 'Siatka',
-            className: "icon-grid",
+            className: "icon grid",
             command: swv,
             context: swv,
             attributes: { title: "View components" },
           },
-          // {
-          //   id: expt,
-          //   className: "btn btn-secondary",
-          //   label: 'Zapisz zmiany',
-          //   command: expt,
-          //   context: expt,
-          //   attributes: { title: "Save" },
-          // },
         ],
-      }
+      },
+      {
+        id: "panel-undo",
+        el: ".panel__undo",
+        buttons: [
+          {
+            id: 'undo',
+            className: 'undo icon',
+            command: 'core:undo',
+            label: 'Cofnij',
+            attributes: { title: 'Undo' }
+          }
+        ]
+      },
+      {
+        id: "panel-save",
+        el: ".panel__save",
+        buttons: [
+          {
+            id: expt,
+            className: "btn btn-secondary w-full",
+            label: 'Zapisz zmiany',
+            command: expt,
+            context: expt,
+            attributes: { title: "Save" },
+          },
+        ],
+      },
     ],
   },
   deviceManager: {
@@ -106,12 +134,14 @@ export const editor = grapesjs.init({
         buildProps: [
           "float",
           "display",
+          "align-items",
+          "justify-content",
+          "order",
           "position",
           "top",
           "right",
           "left",
-          "bottom",
-          "align-items",
+          "bottom",    
         ],
       },
       {
@@ -170,7 +200,7 @@ export const editor = grapesjs.init({
     ],
   },
   blockManager: {
-    appendTo: "#blocks",
+    appendTo: "#blockmanager",
     custom: true,
     blocks: [],
   },
@@ -182,154 +212,24 @@ export const editor = grapesjs.init({
   }
 });
 
+window.editor = editor;
 const blockManager = editor.BlockManager;
 const undoManager = editor.UndoManager;
-
-// Commands
-editor.Commands.add("set-device-desktop", {
-  run(editor) {
-    editor.setDevice("Desktop");
-  },
-  stop() { },
-});
-
-editor.Commands.add("set-device-laptop", {
-  run(editor) {
-    editor.setDevice("Laptop");
-  },
-  stop() { },
-});
-
-editor.Commands.add("set-device-tablet", {
-  run(editor) {
-    editor.setDevice("Tablet");
-  },
-  stop() { },
-});
-
-editor.Commands.add("set-device-mobile", {
-  run(editor) {
-    editor.setDevice("Mobile");
-  },
-  stop() { },
-});
-
-editor.Commands.add("set-device-mobile-s", {
-  run(editor) {
-    editor.setDevice("Mobile-S");
-  },
-  stop() { },
-});
-
-blockManager.add("big_label", {
-  label: "Heading",
-  content: '<h2 class="big_label">Heading</h2>',
-  category: "Test",
-  attributes: {
-    title: "Dodaj nagłówek h2",
-  },
-});
-
-blockManager.add("paragraph", {
-  label: "Paragraf",
-  category: "Test",
-  content: `<p>Lorem ipsum</p>`,
-});
-
-blockManager.add("block", {
-  label: "Blok",
-  category: "Test",
-  content: {
-    type: "div-block",
-  },
-  droppable: true,
-});
-
-blockManager.add("image", {
-  label: "Grafika",
-  category: "Test",
-  content: `<p>Lorem ipsum</p>`,
-  select: true,
-  content: { type: "image" },
-  activate: true,
-});
-
-blockManager.add("popup-wrapper", {
-  id: "popup-wrapper",
-  category: "Układ",
-  label: "Popup (wrapper)",
-  content: {
-    type: "popup-wrapper",
-  },
-  droppable: true,
-});
-
-blockManager.add("form-1", {
-  id: "form-1",
-  category: "Formularze",
-  label: "Zapis do newslettera z imieniem i nazwiskiem",
-  content: {
-    type: "form-1",
-  },
-  droppable: true,
-});
-
-editor.Panels.addButton('options', {
-  id: 'undo',
-  className: 'fa fa-undo',
-  command: 'core:undo',
-  attributes: { title: 'Undo' }
-});
-
-editor.Commands.add('open-assets', {
-  run(editor) {
-    document.querySelector('body').classList.add('loading');
-    const parser = new DOMParser();
-    const fileModal = document.getElementById('filemanager');
-    const html = '<iframe id="uploadFrame" src="/panel/cms-files.php?tiny=true&type=image&dir=product" frameborder="0"></iframe>';
-    fileModal.insertAdjacentHTML('beforeend', html);
-    document.getElementById('uploadFrame').addEventListener("load", function (e) {
-      prepareIframe();
-    });
-  }
-})
 
 editor.onReady(() => {
   blockManager.getCategories().each((ctg) => ctg.set("open", false));
   undoManager.start();
+
+  document.querySelectorAll('.gjs-block-category').forEach((c, index) => {
+    c.setAttribute('tabindex', '0');
+    c.classList.add('collapse', 'collapse-arrow', 'group');
+    // c.insertAdjacentHTML('afterbegin', '<input type="checkbox" class="peer"/>');
+    c.querySelector('.gjs-title').classList.add('collapse-title');
+    c.querySelector('.gjs-title').classList.remove('gjs-title');
+    c.querySelector('.gjs-blocks-c').removeAttribute('style');
+    c.querySelector('.gjs-blocks-c').classList.add('collapse-content');
+    c.querySelector('.gjs-blocks-c').classList.remove('gjs-blocks-c');
+    c.querySelector('i').remove();
+  })
+
 });
-
-const prepareIframe = function () {
-  document.getElementById('my-modal-3').checked = true;
-  const iframe = document.getElementById('uploadFrame');
-  const iframeContents = iframe.contentDocument || iframe.contentWindow.document;
-  const buttons = iframeContents.querySelectorAll('.formbuttons');
-
-  document.querySelector('body').classList.remove('loading');
-
-  buttons.forEach(item => {
-    item.addEventListener('click', event => {
-      const clickString = item.getAttribute('onclick');
-      clickString.replace("insertUrl('", "").replace("', '1')", "");
-      document.getElementById('my-modal-3').checked = false;
-      iframe.remove();
-    })
-  });
-
-  document.getElementById('uploadFrame').contentWindow.insertUrl = function (img) {
-    var extension = img.substr((img.lastIndexOf('.') + 1));
-
-    if (extension == 'jpg' || 'jpeg' || 'png' || 'gif') {
-      const cmp = editor.getSelected();
-      cmp.attributes.attributes.src = img;
-      cmp.set('src', img);
-      cmp.view.el.src = img;
-      cmp.setStyle({width: 'auto', height: 'auto'})
-
-      document.getElementById('my-modal-3').checked = false;
-      iframe.remove();
-    } else {
-      alert('Wybrano plik o nieobsługiwanym formacie!');
-    }
-  };
-}

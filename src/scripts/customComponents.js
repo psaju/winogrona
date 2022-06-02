@@ -5,7 +5,7 @@ export const customComponents = (editor) => {
     model: {
       // Default properties
       defaults: {
-        tagName: "popup-wrapper",
+        tagName: "div",
         draggable: true,
         droppable: true,
         stylable: true,
@@ -23,21 +23,68 @@ export const customComponents = (editor) => {
           top: "50%",
           transform: "translate(-50%, -50%)",
           "min-height": "50px",
-          display: "flex",
-          "flex-wrap": "wrap",
         },
-        styles: `
-              .popup img {
-                max-height: 100%;
-                max-width: 100%;
-              }
-              @media (max-width:420px){
-                .popup {
-                  max-width: 420px;
-                  flex-direction: columns;
-                }
-              }
-            `,
+      },
+    },
+  });
+
+  editor.DomComponents.addType("popup-wrapper-sub", {
+    isComponent: (el) => el.tagName === "popup-wrapper-sub",
+    // Model definition
+    model: {
+      // Default properties
+      defaults: {
+        tagName: "div",
+        draggable: '.popup',
+        droppable: true,
+        stylable: true,
+        attributes: {
+          class: "popup-wrapper-sub"
+        },
+        components: `
+            <div></div>
+          `,
+        style: {
+          "display": "flex",
+          "flex-wrap": "wrap",
+          "width": "100%",
+          "height": "100%",
+          "min-height": "50px"
+        },
+      },
+    },
+  });
+
+  editor.DomComponents.addType("close-button", {
+    isComponent: (el) => el.tagName === "close-button",
+    // Model definition
+    model: {
+      // Default properties
+      defaults: {
+        tagName: "span",
+        draggable: '.popup-wrapper-sub',
+        droppable: false,
+        stylable: true,
+        components: '<span></span>',
+        attributes: {
+          name: 'popup-close'
+        },
+        style: {
+          'box-sizing': 'border-box',
+          'position': 'absolute',
+          'top': '3px',
+          'right': '3px',
+          'border-radius': '100%',
+          'width': '20px',
+          'height': '20px',
+          'text-align': 'center',
+          'background-color': '#d6d6d6',
+        },
+        styles:`
+            [name="popup-close"]:before{
+              content: '\\d7'
+            }
+          `
       },
     },
   });
@@ -48,7 +95,7 @@ export const customComponents = (editor) => {
     model: {
       // Default properties
       defaults: {
-        tagName: "div-block",
+        tagName: "div",
         draggable: true,
         droppable: true,
         stylable: true,
@@ -64,105 +111,13 @@ export const customComponents = (editor) => {
     },
   });
 
-  editor.DomComponents.addType("wrapper-1-1", {
-    isComponent: (el) => el.tagName === "wrapper-1-1",
-    model: {
-      // Default properties
-      defaults: {
-        tagName: "wrapper-1-1",
-        draggable: true,
-        droppable: true,
-        stylable: true,
-        components: [
-          {
-            type: "popup-wrapper",
-            style: "",
-            classes: ["popup"],
-            attributes: {
-              id: "ifzg",
-            },
-            components: [
-              {},
-              {
-                type: "div-block",
-                style: "",
-                attributes: {
-                  id: "ikea",
-                },
-                components: [{}],
-              },
-              {
-                type: "div-block",
-                style: "",
-                attributes: {
-                  id: "ic1m",
-                },
-                components: [{}],
-              },
-            ],
-          },
-        ],
-        style: [
-          {
-            selectors: [],
-            selectorsAdd: ".popup img",
-            style: {
-              "max-height": "100%",
-              "max-width": "100%",
-            },
-            group: "cmp:popup-wrapper",
-          },
-          {
-            selectors: ["popup"],
-            style: {
-              "max-width": "420px",
-            },
-            mediaText: "(max-width: 420px)",
-            atRuleType: "media",
-            group: "cmp:popup-wrapper",
-          },
-          {
-            selectors: ["#ifzg"],
-            style: {
-              "max-width": "757px",
-              width: "calc(100% - 20px)",
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              "min-height": "50px",
-              display: "flex",
-              "flex-wrap": "wrap",
-            },
-          },
-          {
-            selectors: ["#ikea"],
-            style: {
-              "min-height": "50px",
-              display: "block",
-              padding: "1rem",
-            },
-          },
-          {
-            selectors: ["#ic1m"],
-            style: {
-              "min-height": "50px",
-              display: "block",
-              padding: "1rem",
-            },
-          },
-        ],
-      },
-    },
-  });
-
   editor.DomComponents.addType("form-1", {
     isComponent: (el) => el.tagName === "form-1",
     // Model definition
     model: {
       // Default properties
       defaults: {
-        tagName: "form",
+        tagName: "div",
         draggable: true,
         droppable: true,
         stylable: true,

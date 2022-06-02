@@ -171,6 +171,10 @@ body {
     color: var(--secondary)
 }
 
+.gjs-plh-image {
+    outline: none !important;
+}
+
 .gjs-four-color-h:hover {
     color: var(--secondary)
 }
@@ -408,4 +412,8 @@ body.loading:after {
 .c_desc {
     color: #959595;
     font-size: .95rem;
+}
+
+#blocks-temp {
+    display: none !important;
 }

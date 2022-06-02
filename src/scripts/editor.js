@@ -1,4 +1,5 @@
 import { customComponents } from "./customComponents.js";
+import { templates } from "./templates.js";
 import pl from './locale/pl.js';
 
 const crc = "create-comp";
@@ -33,9 +34,12 @@ export const editor = grapesjs.init({
    .gjs-hovered {
       outline: 1px solid #14b8a6 !important;
     }
+    .gjs-plh-image {
+      outline: none;
+    }
 `,
   selectorManager: { componentFirst: true },
-  plugins: [customComponents],
+  plugins: [customComponents, templates, 'grapesjs-plugin-forms', 'grapesjs-custom-code'],
   panels: {
     defaults: [
       {
@@ -136,6 +140,7 @@ export const editor = grapesjs.init({
           "display",
           "align-items",
           "justify-content",
+          "flex-wrap",
           "order",
           "position",
           "top",
@@ -150,8 +155,10 @@ export const editor = grapesjs.init({
         buildProps: [
           "width",
           "height",
+          "min-width",
           "max-width",
           "min-height",
+          "max-height",
           "margin",
           "padding",
         ],
@@ -200,7 +207,7 @@ export const editor = grapesjs.init({
     ],
   },
   blockManager: {
-    appendTo: "#blockmanager",
+    appendTo: "#blocks-temp",
     custom: true,
     blocks: [],
   },
@@ -219,17 +226,4 @@ const undoManager = editor.UndoManager;
 editor.onReady(() => {
   blockManager.getCategories().each((ctg) => ctg.set("open", false));
   undoManager.start();
-
-  document.querySelectorAll('.gjs-block-category').forEach((c, index) => {
-    c.setAttribute('tabindex', '0');
-    c.classList.add('collapse', 'collapse-arrow', 'group');
-    // c.insertAdjacentHTML('afterbegin', '<input type="checkbox" class="peer"/>');
-    c.querySelector('.gjs-title').classList.add('collapse-title');
-    c.querySelector('.gjs-title').classList.remove('gjs-title');
-    c.querySelector('.gjs-blocks-c').removeAttribute('style');
-    c.querySelector('.gjs-blocks-c').classList.add('collapse-content');
-    c.querySelector('.gjs-blocks-c').classList.remove('gjs-blocks-c');
-    c.querySelector('i').remove();
-  })
-
 });

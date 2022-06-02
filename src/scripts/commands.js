@@ -56,3 +56,12 @@ editor.on("component:selected", () => {
     document.querySelector('.tab.components').click();
     document.querySelector('input.css').setAttribute('checked','checked');
 });
+
+// editor.on('component:create', component => {
+//   const id = component.attributes.classes?.models[0]?.id;
+//   if (id == 'popup') {
+//       if (editor.getComponents().filter(comp => comp.attributes.classes.models[0].id == id).length > 1) {
+//         editor.getComponents().filter(comp => comp.attributes.classes.models[0].id == id).forEach(c => c.remove())
+//       }
+//   }
+// })

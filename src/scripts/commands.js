@@ -39,11 +39,16 @@ editor.Commands.add("set-device-mobile-s", {
 editor.Commands.add("open-assets", {
   run(editor) {
     document.querySelector("body").classList.add("loading");
-    const parser = new DOMParser();
-    const fileModal = document.getElementById("filemanager");
-    const html =
-      '<iframe id="uploadFrame" src="/panel/cms-files.php?tiny=true&type=image&dir=product" frameborder="0"></iframe>';
-    fileModal.insertAdjacentHTML("beforeend", html);
+
+    const modal = document.getElementById('custom-modal');
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalBody = modal.querySelector('.modal-content');
+    modalTitle.innerHTML = '';
+    modalBody.innerHTML = '';
+
+    const html = '<iframe id="uploadFrame" src="/panel/cms-files.php?tiny=true&type=image&dir=product" frameborder="0"></iframe>';
+    modalBody.insertAdjacentHTML("beforeend", html);
+
     document
       .getElementById("uploadFrame")
       .addEventListener("load", function (e) {
@@ -57,11 +62,8 @@ editor.on("component:selected", () => {
     document.querySelector('input.css').setAttribute('checked','checked');
 });
 
-// editor.on('component:create', component => {
-//   const id = component.attributes.classes?.models[0]?.id;
-//   if (id == 'popup') {
-//       if (editor.getComponents().filter(comp => comp.attributes.classes.models[0].id == id).length > 1) {
-//         editor.getComponents().filter(comp => comp.attributes.classes.models[0].id == id).forEach(c => c.remove())
-//       }
-//   }
-// })
+editor.on("component:remove", model => {
+  if(!editor.getComponents().length){
+    editor.setStyle('');
+  }
+})

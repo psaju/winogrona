@@ -16,7 +16,7 @@ div#ioqe {
 
 html,
 body {
-    overflow-x: hidden;
+    max-height: 100vh;
 }
 
 body {
@@ -90,9 +90,14 @@ body {
     margin-left: .5rem;
 }
 
+div#sidebar {
+    max-height: 100vh;
+}
+
 /* Let's highlight canvas boundaries */
 #gjs {
     border: 3px solid var(--bg-dark);
+    max-height: calc(100vh - 90px);
 }
 
 /* Reset some default styling */
@@ -121,8 +126,9 @@ body {
 .tabcontent {
     display: none;
     border: 1px solid var(--bg-dark);
-    min-height: calc(100vh - 130px);
+    height: calc(100vh - 130px);
     border-top: none;
+    overflow: auto;
 }
 
 /* Layout */
@@ -387,6 +393,15 @@ body.loading:after {
     content: '\E805';
 }
 
+.clear {
+    font-size: 1rem;
+}
+
+
+.clear:after {
+    content: '\E806';
+}
+
 .grid {
     font-size: 1rem;
 }
@@ -416,4 +431,30 @@ body.loading:after {
 
 #blocks-temp {
     display: none !important;
+}
+
+.gjs-block__media + .gjs-block-label {
+    margin-top: 1rem;
+}
+
+.gjs-block-label {
+    font: normal normal normal 11px/13px Roboto;
+    text-align: left;
+}
+
+.gjs-block__media + .gjs-block-label {
+    margin-top: 1rem;
+    font: normal normal normal 11px/13px Roboto;
+    text-align: left;
+}
+
+.gjs-block__media svg {
+    height: 60px;
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.gjs-block {
+    border-radius: 5px;
+    box-shadow: none;
 }

@@ -2,14 +2,8 @@ import { customComponents } from "./customComponents.js";
 import { templates } from "./templates.js";
 import pl from './locale/pl.js';
 
-const crc = "create-comp";
-const mvc = "move-comp";
 const swv = "sw-visibility";
 const expt = "export-template";
-const osm = "open-sm";
-const otm = "open-tm";
-const ola = "open-layers";
-const obl = "open-blocks";
 
 export const editor = grapesjs.init({
   container: "#gjs",
@@ -40,6 +34,18 @@ export const editor = grapesjs.init({
 `,
   selectorManager: { componentFirst: true },
   plugins: [customComponents, templates, 'grapesjs-plugin-forms', 'grapesjs-custom-code'],
+  pluginsOpts: {
+    'grapesjs-custom-code': {
+      blockLabel: 'Własny kod',
+      blockCustomCode: false,
+      placeholderContent: '<span>Tu umieść własny kod</span>',
+      toolbarBtnCustomCode: {
+        attributes: { title: 'Edytuj własny kod' }
+      },
+      modalTitle: 'Umieść własny kod',
+      buttonLabel: 'Zapisz'
+    }
+  },
   panels: {
     defaults: [
       {
@@ -109,6 +115,18 @@ export const editor = grapesjs.init({
           },
         ],
       },
+      {
+        id: "panel-clear",
+        el: ".panel__clear",
+        buttons: [
+          {
+            id: swv,
+            label: 'Wyczyść',
+            className: "icon clear",
+            command: 'core:canvas-clear',
+          },
+        ],
+      },
     ],
   },
   deviceManager: {
@@ -138,6 +156,7 @@ export const editor = grapesjs.init({
         buildProps: [
           "float",
           "display",
+          "overflow",
           "align-items",
           "justify-content",
           "flex-wrap",
@@ -216,6 +235,10 @@ export const editor = grapesjs.init({
   },
   selectorManager: {
     appendTo: "#selector-container",
+  }, 
+  modal: {
+    backdrop: false,
+    custom: true,
   }
 });
 
@@ -226,4 +249,24 @@ const undoManager = editor.UndoManager;
 editor.onReady(() => {
   blockManager.getCategories().each((ctg) => ctg.set("open", false));
   undoManager.start();
+});
+
+let modalTitle, modalBody;
+editor.on('modal', (props) => {
+
+    const modal = document.getElementById('custom-modal');
+    modalTitle = modal.querySelector('.modal-title');
+    modalBody = modal.querySelector('.modal-content');
+
+  if (props.open) {
+    // clear the current elements
+    modalTitle.innerHTML = '';
+    modalBody.innerHTML = '';
+    // Add new elements
+    modalTitle.appendChild(props.title);
+    modalBody.appendChild(props.content);
+    document.getElementById('custom-modal-input').checked = true;
+  } else {
+    document.getElementById('custom-modal-input').checked = false;
+  }
 });

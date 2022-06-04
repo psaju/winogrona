@@ -22,7 +22,11 @@
                   </div>
                   <div class="panel__grid"></div>
             </div>
-            <div class="panel__undo"></div>
+            <div>
+              <div class="panel__undo"></div>
+              <div class="panel__clear"></div>
+            </div>
+            
           
         </div>
         <div id="gjs" class="gjs"></div>
@@ -57,14 +61,12 @@
       </div>
     </div>
 
-    <input type="checkbox" id="my-modal-3" class="modal-toggle" />
-    <div class="modal">
-      <div id="filemanager" class="modal-box relative w-11/12 max-w-5xl">
-        <label
-          for="my-modal-3"
-          class="btn btn-sm btn-circle absolute right-2 top-2"
-          >✕</label
-        >
+    <input type="checkbox" id="custom-modal-input" class="modal-toggle" />
+    <div class="modal" id="custom-modal">
+      <div class="modal-box relative w-11/12 max-w-5xl">
+        <label for="custom-modal-input" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="text-lg font-bold modal-title"></h3>
+        <p class="py-4 modal-content"></p>
       </div>
     </div>
 

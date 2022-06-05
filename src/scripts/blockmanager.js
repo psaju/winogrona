@@ -6,7 +6,7 @@ const categoryLabels = {
     layout: `<div class="c_heading">Układy</div><div class="c_desc">Dwu, trzykolumnowe etc.</div>`,
     forms: `<div class="c_heading">Formularze</div><div class="c_desc">inputy, przyciski etc</div>`,
     templates: '<div class="c_heading">Szablony</div><div class="c_desc">gotowe wzory</div>',
-    extra: '<div class="c_heading">Extra</div><div class="c_desc">kod, zmienne</div>',
+    extra: '<div class="c_heading">Extra</div><div class="c_desc">własny kod, zmienne</div>',
 }
 
 blockManager.add("big_label", {
@@ -200,14 +200,14 @@ blockManager.add("big_label", {
     document.querySelectorAll('.gjs-block-category').forEach((c, index) => {
       c.setAttribute('tabindex', '0');
       c.classList.add('collapse', 'collapse-arrow', 'group');
-      // c.insertAdjacentHTML('afterbegin', '<input type="checkbox" class="peer"/>');
-      c.querySelector('.gjs-title').classList.add('collapse-title');
+      c.insertAdjacentHTML('afterbegin', '<input type="checkbox" class="peer"/>');
+      c.querySelector('.gjs-title').classList.add('collapse-title', 'peer-checked:bg-white');
       c.querySelector('.gjs-title').classList.remove('gjs-title');
       c.querySelector('.gjs-blocks-c').removeAttribute('style');
-      c.querySelector('.gjs-blocks-c').classList.add('collapse-content');
+      c.querySelector('.gjs-blocks-c').classList.add('collapse-content', 'peer-checked:bg-white');
       c.querySelector('.gjs-blocks-c').classList.remove('gjs-blocks-c');
       c.querySelector('i').remove();
-    })
+    });
     
     blockManager.getCategories().each((ctg) => {
         ctg.view.el.querySelector('.collapse-title').innerHTML = categoryLabels[ctg.attributes.id];

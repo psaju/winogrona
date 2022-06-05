@@ -69,8 +69,18 @@ body {
 
 .gjs-block-category {
     border-radius: var(--br);
+    margin-bottom: .5rem;
 
     &:focus {
+        box-shadow: 0px 3px 6px #00000029;
+        background-color: #fff;;
+    }
+}
+
+#stylemanager-wrapper {
+    border-radius: var(--br);
+
+    > input:checked + div {
         box-shadow: 0px 3px 6px #00000029;
         background-color: #fff;;
     }
@@ -125,10 +135,10 @@ div#sidebar {
 /* Style the tab content */
 .tabcontent {
     display: none;
-    border: 1px solid var(--bg-dark);
     height: calc(100vh - 130px);
     border-top: none;
     overflow: auto;
+    padding: 0 1rem;
 }
 
 /* Layout */
@@ -457,4 +467,58 @@ body.loading:after {
 .gjs-block {
     border-radius: 5px;
     box-shadow: none;
+}
+
+.gjs-color-main, .gjs-off-prv, .gjs-sm-stack #gjs-sm-add, .gjs-clm-tags #gjs-clm-checkbox, .gjs-clm-tags #gjs-clm-close {
+    color: #333;
+    fill: #333;
+}
+
+.gjs-field-arrow-u, .gjs-field-arrow-d {
+    filter: brightness(0.1);
+}
+
+.gjs-clm-field input, .gjs-clm-field select, .gjs-clm-select input, .gjs-clm-select select, .gjs-sm-field input, .gjs-sm-field select, .gjs-clm-tags #gjs-clm-new {
+    color: #333;
+}
+
+.gjs-cm-editor#gjs-cm-htmlmixed #gjs-cm-title,
+.gjs-cm-editor#gjs-cm-css #gjs-cm-title {
+    color: #333;
+}
+
+.peer:checked~.peer-checked\:bg-white {
+    --tw-bg-opacity: 1;
+    background-color: hsl(0,0%,100%/var(--tw-bg-opacity));
+    box-shadow: 0 3px 6px #00000029;
+}
+
+.peer:checked~.collapse-content.peer-checked\:bg-white {
+    box-shadow: 0 6px 6px #00000029;
+}
+
+.collapse {
+    overflow: visible;
+}
+
+
+
+.collapse-title {
+    border-top-left-radius: var(--br);
+    border-top-right-radius: var(--br);
+}
+
+.collapse-content {
+    border-bottom-left-radius: var(--br);
+    border-bottom-right-radius: var(--br);
+}
+
+.collapse-title,
+.collapse-content {
+    transition: all 0s !important;
+}
+
+.gjs-clm-tags,
+.gjs-sm-properties {
+    font-size: 1rem;
 }

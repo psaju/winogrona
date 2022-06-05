@@ -42,12 +42,14 @@
 
         <div id="blocks" class="tabcontent">
             <div id="blockmanager"></div>
-            <div class="collapse collapse-arrow">
-                <input type="checkbox" class="peer css" /> 
-                <div class="collapse-title text-primary-content peer-checked:text-secondary-content text-base">
+            <div id="stylemanager-wrapper" class="collapse collapse-arrow">
+                <input type="checkbox" class="peer css"/> 
+                <div class="collapse-title peer-checked:bg-white">
+                  <div class="c_heading">
                     Zaawansowane ustawienia CSS
+                  </div>
                 </div>
-                <div class="collapse-content text-primary-content peer-checked:text-secondary-content"> 
+                <div class="collapse-content peer-checked:bg-white"> 
                     
                     <div id="style-manager">
                         <div id="selector-container"></div>
@@ -63,7 +65,7 @@
 
     <input type="checkbox" id="custom-modal-input" class="modal-toggle" />
     <div class="modal" id="custom-modal">
-      <div class="modal-box relative w-11/12 max-w-5xl">
+      <div class="modal-box relative w-11/12 max-w-screen-lg">
         <label for="custom-modal-input" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <h3 class="text-lg font-bold modal-title"></h3>
         <p class="py-4 modal-content"></p>

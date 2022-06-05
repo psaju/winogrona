@@ -12,11 +12,11 @@ export const editor = grapesjs.init({
   width: "auto",
   storageManager: false,
   allowScripts: 1,
-  i18n: {
-    locale: pl,
-    localeFallback: 'en',
-    messages: { pl },
-  },
+  // i18n: {
+  //   locale: pl,
+  //   localeFallback: 'en',
+  //   messages: { pl },
+  // },
   assetManager: {
     embedAsBase64: true,
     uploadFile: false,
@@ -208,6 +208,7 @@ export const editor = grapesjs.init({
           "background",
         ],
       },
+      
       {
         name: "Dodatkowe",
         open: false,

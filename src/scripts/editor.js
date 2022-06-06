@@ -33,7 +33,7 @@ export const editor = grapesjs.init({
     }
 `,
   selectorManager: { componentFirst: true },
-  plugins: [customComponents, templates, 'grapesjs-plugin-forms', 'grapesjs-custom-code'],
+  plugins: [customComponents, templates, 'grapesjs-plugin-forms', 'grapesjs-custom-code', 'gjs-plugin-ckeditor'],
   pluginsOpts: {
     'grapesjs-custom-code': {
       blockLabel: 'Własny kod',
@@ -44,6 +44,23 @@ export const editor = grapesjs.init({
       },
       modalTitle: 'Umieść własny kod',
       buttonLabel: 'Zapisz'
+    },
+    'gjs-plugin-ckeditor': {
+      position: 'center',
+      options: {
+        startupFocus: true,
+        extraAllowedContent: '*(*);*{*}', // Allows any class and any inline style
+        allowedContent: true, // Disable auto-formatting, class removing, etc.
+        enterMode: CKEDITOR.ENTER_BR,
+        extraPlugins: 'sharedspace,justify,colorbutton,panelbutton,font',
+        toolbar: [
+          { name: 'styles', items: ['Font', 'FontSize' ] },
+          ['Bold', 'Italic', 'Underline', 'Strike'],
+          {name: 'paragraph', items : [ 'NumberedList', 'BulletedList']},
+          {name: 'links', items: ['Link', 'Unlink']},
+          {name: 'colors', items: [ 'TextColor', 'BGColor' ]},
+        ],
+      }
     }
   },
   panels: {

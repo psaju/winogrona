@@ -57,6 +57,13 @@ function prepareIframe() {
   };
 }
 
+function importTemplate(html, css){
+  editor.runCommand('core:canvas-clear');
+  editor.CssComposer.clear();
+  editor.setComponents(html);
+  editor.setStyle(css);
+}
+
 document.querySelector('label[for="custom-modal-input"]').addEventListener('click', function(e){
   e.preventDefault();
   if(document.querySelector('.gjs-btn-import__custom-code')) {

@@ -1,10 +1,7 @@
-import {
-  customComponents
-} from "./customComponents.js";
-import {
-  templates
-} from "./templates.js";
-import pl from './locale/pl.js';
+import { customComponents} from "./customComponents.js";
+import {closeButtonComponents} from "./components/closeButtonComponents.js";
+import {textVariablesComponent} from "./components/textVariablesComponent.js"
+import { templates } from "./templates.js";
 
 const swv = "sw-visibility";
 const expt = "export-template";
@@ -39,7 +36,15 @@ export const editor = grapesjs.init({
   selectorManager: {
     componentFirst: true
   },
-  plugins: [customComponents, templates, 'grapesjs-plugin-forms', 'grapesjs-custom-code', 'gjs-plugin-ckeditor'],
+  plugins: [
+    customComponents, 
+    templates, 
+    closeButtonComponents, 
+    textVariablesComponent, 
+    'grapesjs-plugin-forms', 
+    'grapesjs-custom-code', 
+    'gjs-plugin-ckeditor'
+  ],
   pluginsOpts: {
     'grapesjs-custom-code': {
       blockLabel: 'Własny kod',
@@ -272,62 +277,3 @@ export const editor = grapesjs.init({
 });
 
 window.editor = editor;
-const blockManager = editor.BlockManager;
-const undoManager = editor.UndoManager;
-
-
-editor.onReady(() => {
-  blockManager.getCategories().each((ctg) => ctg.set("open", false));
-  undoManager.start();
-});
-
-let modalTitle, modalBody;
-editor.on('modal', (props) => {
-
-  const modal = document.getElementById('custom-modal');
-  modalTitle = modal.querySelector('.modal-title');
-  modalBody = modal.querySelector('.modal-content');
-
-  if (props.open) {
-    // clear the current elements
-    modalTitle.innerHTML = '';
-    modalBody.innerHTML = '';
-    // Add new elements
-    modalTitle.appendChild(props.title);
-    modalBody.appendChild(props.content);
-    document.getElementById('custom-modal-input').checked = true;
-  } else {
-    document.getElementById('custom-modal-input').checked = false;
-  }
-});
-
-// define this event handler after editor is defined
-// like in const editor = grapesjs.init({ ...config });
-editor.on('component:selected', () => {
-
-  // whenever a component is selected in the editor
-
-  // set your command and icon here
-  const commandToAdd = 'iai-replace';
-  const commandIcon = 'icon-arrows-cw';
-
-  // get the selected componnet and its default toolbar
-  const selectedComponent = editor.getSelected();
-  const defaultToolbar = selectedComponent.get('toolbar');
-
-  // check if this command already exists on this component toolbar
-  const commandExists = defaultToolbar.some(item => item.command === commandToAdd);
-  const hasReplaceAttribute = selectedComponent.getTrait('replacable');
-  // if it doesn't already exist, add it
-  if (!commandExists && hasReplaceAttribute) {
-    selectedComponent.set({
-      toolbar: [...defaultToolbar, {
-        attributes: {
-          class: commandIcon
-        },
-        command: commandToAdd
-      }]
-    });
-  }
-
-});

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <span class="loader"></span>
+
+    <div id="content" class="flex">
+      <div class="w-9/12">
+        <div id="panel" class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="panel__devices">
+                    <span>Widok</span>
+                  </div>
+                  <div class="panel__grid"></div>
+            </div>
+            <div>
+              <div class="panel__undo"></div>
+              <div class="panel__clear"></div>
+            </div>
+            
+          
+        </div>
+        <div id="gjs" class="gjs"></div>
+      </div>
+
+      <div id="sidebar" class="w-3/12">
+        <div class="panel__tabs flex">
+            <a class="tab btn active flex-1 templates icon" onclick="openTab(event, 'templates')">Szablon</a>
+            <a class="tab btn flex-1 components icon" onclick="openTab(event, 'blocks')">Komponenty</a>
+        </div>
+
+        <div id="templates" class="tabcontent" style="display: block"></div>
+
+        <div id="blocks" class="tabcontent">
+            <div id="blockmanager"></div>
+            <div id="stylemanager-wrapper" class="collapse collapse-arrow">
+                <input type="checkbox" class="peer css"/> 
+                <div class="collapse-title peer-checked:bg-white">
+                  <div class="c_heading">
+                    Zaawansowane ustawienia CSS
+                  </div>
+                </div>
+                <div class="collapse-content peer-checked:bg-white"> 
+                    
+                    <div id="style-manager">
+                        <div id="selector-container"></div>
+                        <div id="trait-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel__save w-full"></div>
+      </div>
+    </div>
+
+    <input type="checkbox" id="custom-modal-input" class="modal-toggle" />
+    <div class="modal" id="custom-modal">
+      <div class="modal-box relative w-11/12 max-w-screen-lg">
+        <label for="custom-modal-input" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="text-lg font-bold modal-title"></h3>
+        <p class="py-4 modal-content"></p>
+      </div>
+    </div>
+
+    <div id="blocks-temp"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/ckeditor.js"></script>
+    <script src="bundle.js"></script>
+  </body>
+</html>

@@ -523,12 +523,25 @@ body.loading:after {
 .gjs-sm-properties {
     font-size: 1rem;
 }
-
+/* 
 .gjs-rte-toolbar {
     top: 0 !important;
     transform: translateY(-100%);
-}
+} */
 
 .gjs-toolbar > div {
     display: flex;
+}
+
+.modal-box .gjs-blocks-no-cat > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.modal-box .gjs-blocks-no-cat > div > div {
+    cursor: pointer;
+}
+
+.gjs-block svg {
+    fill: #565656;
 }

@@ -55,45 +55,6 @@ export const customComponents = (editor) => {
     },
   });
 
-  editor.DomComponents.addType("close-button", {
-    isComponent: (el) => el.tagName === "close-button",
-    // Model definition
-    model: {
-      // Default properties
-      defaults: {
-        tagName: "span",
-        draggable: '.popup-wrapper-sub',
-        droppable: false,
-        stylable: true,
-        components: '<span></span>',
-        attributes: {
-          name: 'popup-close',
-        },
-        style: {
-          'box-sizing': 'border-box',
-          'position': 'absolute',
-          'top': '3px',
-          'right': '3px',
-          'border-radius': '100%',
-          'width': '20px',
-          'height': '20px',
-          'text-align': 'center',
-          'background-color': '#d6d6d6',
-        },
-        styles: `
-            [name="popup-close"]:before{
-              content: '\\d7'
-            }
-          `,
-        traits: [{
-          name: 'replacable',
-          type: 'checkbox',
-          label: 'replacable',
-        }]
-      },
-    },
-  });
-
   editor.DomComponents.addType("div-block", {
     isComponent: (el) => el.tagName === "div-block",
     // Model definition

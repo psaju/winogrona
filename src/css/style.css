@@ -528,3 +528,7 @@ body.loading:after {
     top: 0 !important;
     transform: translateY(-100%);
 }
+
+.gjs-toolbar > div {
+    display: flex;
+}

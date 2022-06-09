@@ -1,5 +1,9 @@
-import { customComponents } from "./customComponents.js";
-import { templates } from "./templates.js";
+import {
+  customComponents
+} from "./customComponents.js";
+import {
+  templates
+} from "./templates.js";
 import pl from './locale/pl.js';
 
 const swv = "sw-visibility";
@@ -32,7 +36,9 @@ export const editor = grapesjs.init({
       outline: none;
     }
 `,
-  selectorManager: { componentFirst: true },
+  selectorManager: {
+    componentFirst: true
+  },
   plugins: [customComponents, templates, 'grapesjs-plugin-forms', 'grapesjs-custom-code', 'gjs-plugin-ckeditor'],
   pluginsOpts: {
     'grapesjs-custom-code': {
@@ -40,7 +46,9 @@ export const editor = grapesjs.init({
       blockCustomCode: false,
       placeholderContent: '<span>Tu umieść własny kod</span>',
       toolbarBtnCustomCode: {
-        attributes: { title: 'Edytuj własny kod' }
+        attributes: {
+          title: 'Edytuj własny kod'
+        }
       },
       modalTitle: 'Umieść własny kod',
       buttonLabel: 'Zapisz'
@@ -53,23 +61,32 @@ export const editor = grapesjs.init({
         allowedContent: true, // Disable auto-formatting, class removing, etc.
         enterMode: CKEDITOR.ENTER_BR,
         extraPlugins: 'sharedspace,justify,colorbutton,panelbutton,font',
-        toolbar: [
-          { name: 'styles', items: ['Font', 'FontSize' ] },
+        toolbar: [{
+            name: 'styles',
+            items: ['Font', 'FontSize']
+          },
           ['Bold', 'Italic', 'Underline', 'Strike'],
-          {name: 'paragraph', items : [ 'NumberedList', 'BulletedList']},
-          {name: 'links', items: ['Link', 'Unlink']},
-          {name: 'colors', items: [ 'TextColor', 'BGColor' ]},
+          {
+            name: 'paragraph',
+            items: ['NumberedList', 'BulletedList']
+          },
+          {
+            name: 'links',
+            items: ['Link', 'Unlink']
+          },
+          {
+            name: 'colors',
+            items: ['TextColor', 'BGColor']
+          },
         ],
       }
     }
   },
   panels: {
-    defaults: [
-      {
+    defaults: [{
         id: "panel-devices",
         el: ".panel__devices",
-        buttons: [
-          {
+        buttons: [{
             id: "device-desktop",
             className: "fa fa-desktop",
             command: "set-device-desktop",
@@ -93,62 +110,59 @@ export const editor = grapesjs.init({
       {
         id: "panel-grid",
         el: ".panel__grid",
-        buttons: [
-          {
-            active: true,
-            id: swv,
-            label: 'Siatka',
-            className: "icon grid",
-            command: swv,
-            context: swv,
-            attributes: { title: "View components" },
+        buttons: [{
+          active: true,
+          id: swv,
+          label: 'Siatka',
+          className: "icon grid",
+          command: swv,
+          context: swv,
+          attributes: {
+            title: "View components"
           },
-        ],
+        }, ],
       },
       {
         id: "panel-undo",
         el: ".panel__undo",
-        buttons: [
-          {
-            id: 'undo',
-            className: 'undo icon',
-            command: 'core:undo',
-            label: 'Cofnij',
-            attributes: { title: 'Undo' }
+        buttons: [{
+          id: 'undo',
+          className: 'undo icon',
+          command: 'core:undo',
+          label: 'Cofnij',
+          attributes: {
+            title: 'Undo'
           }
-        ]
+        }]
       },
       {
         id: "panel-save",
         el: ".panel__save",
-        buttons: [
-          {
-            id: expt,
-            className: "btn btn-secondary w-full",
-            label: 'Zapisz zmiany',
-            command: expt,
-            context: expt,
-            attributes: { title: "Save" },
+        buttons: [{
+          id: expt,
+          className: "btn btn-secondary w-full",
+          label: 'Zapisz zmiany',
+          command: expt,
+          context: expt,
+          attributes: {
+            title: "Save"
           },
-        ],
+        }, ],
       },
       {
         id: "panel-clear",
         el: ".panel__clear",
-        buttons: [
-          {
-            id: swv,
-            label: 'Wyczyść',
-            className: "icon clear",
-            command: 'core:canvas-clear',
-          },
-        ],
+        buttons: [{
+          id: swv,
+          label: 'Wyczyść',
+          className: "icon clear",
+          command: 'core:canvas-clear',
+        }, ],
       },
     ],
   },
   deviceManager: {
-    devices: [
-      {
+    devices: [{
         name: "Desktop",
         width: "", // default size
       },
@@ -166,8 +180,7 @@ export const editor = grapesjs.init({
   },
   styleManager: {
     appendTo: "#style-manager",
-    sectors: [
-      {
+    sectors: [{
         name: "Ogólne",
         open: false,
         buildProps: [
@@ -182,7 +195,7 @@ export const editor = grapesjs.init({
           "top",
           "right",
           "left",
-          "bottom",    
+          "bottom",
         ],
       },
       {
@@ -225,21 +238,19 @@ export const editor = grapesjs.init({
           "background",
         ],
       },
-      
+
       {
         name: "Dodatkowe",
         open: false,
         buildProps: ["opacity", "transition", "perspective", "transform"],
-        properties: [
-          {
-            type: "slider",
-            property: "opacity",
-            defaults: 1,
-            step: 0.01,
-            max: 1,
-            min: 0,
-          },
-        ],
+        properties: [{
+          type: "slider",
+          property: "opacity",
+          defaults: 1,
+          step: 0.01,
+          max: 1,
+          min: 0,
+        }, ],
       },
     ],
   },
@@ -253,7 +264,7 @@ export const editor = grapesjs.init({
   },
   selectorManager: {
     appendTo: "#selector-container",
-  }, 
+  },
   modal: {
     backdrop: false,
     custom: true,
@@ -264,6 +275,7 @@ window.editor = editor;
 const blockManager = editor.BlockManager;
 const undoManager = editor.UndoManager;
 
+
 editor.onReady(() => {
   blockManager.getCategories().each((ctg) => ctg.set("open", false));
   undoManager.start();
@@ -272,9 +284,9 @@ editor.onReady(() => {
 let modalTitle, modalBody;
 editor.on('modal', (props) => {
 
-    const modal = document.getElementById('custom-modal');
-    modalTitle = modal.querySelector('.modal-title');
-    modalBody = modal.querySelector('.modal-content');
+  const modal = document.getElementById('custom-modal');
+  modalTitle = modal.querySelector('.modal-title');
+  modalBody = modal.querySelector('.modal-content');
 
   if (props.open) {
     // clear the current elements
@@ -287,4 +299,35 @@ editor.on('modal', (props) => {
   } else {
     document.getElementById('custom-modal-input').checked = false;
   }
+});
+
+// define this event handler after editor is defined
+// like in const editor = grapesjs.init({ ...config });
+editor.on('component:selected', () => {
+
+  // whenever a component is selected in the editor
+
+  // set your command and icon here
+  const commandToAdd = 'iai-replace';
+  const commandIcon = 'icon-arrows-cw';
+
+  // get the selected componnet and its default toolbar
+  const selectedComponent = editor.getSelected();
+  const defaultToolbar = selectedComponent.get('toolbar');
+
+  // check if this command already exists on this component toolbar
+  const commandExists = defaultToolbar.some(item => item.command === commandToAdd);
+  const hasReplaceAttribute = selectedComponent.getTrait('replacable');
+  // if it doesn't already exist, add it
+  if (!commandExists && hasReplaceAttribute) {
+    selectedComponent.set({
+      toolbar: [...defaultToolbar, {
+        attributes: {
+          class: commandIcon
+        },
+        command: commandToAdd
+      }]
+    });
+  }
+
 });

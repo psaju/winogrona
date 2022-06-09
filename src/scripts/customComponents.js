@@ -67,7 +67,7 @@ export const customComponents = (editor) => {
         stylable: true,
         components: '<span></span>',
         attributes: {
-          name: 'popup-close'
+          name: 'popup-close',
         },
         style: {
           'box-sizing': 'border-box',
@@ -80,11 +80,16 @@ export const customComponents = (editor) => {
           'text-align': 'center',
           'background-color': '#d6d6d6',
         },
-        styles:`
+        styles: `
             [name="popup-close"]:before{
               content: '\\d7'
             }
-          `
+          `,
+        traits: [{
+          name: 'replacable',
+          type: 'checkbox',
+          label: 'replacable',
+        }]
       },
     },
   });

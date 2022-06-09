@@ -1,4 +1,6 @@
-import { editor } from "./editor.js";
+import {
+  editor
+} from "./editor.js";
 
 // Commands
 editor.Commands.add("set-device-desktop", {
@@ -58,12 +60,30 @@ editor.Commands.add("open-assets", {
 });
 
 editor.on("component:selected", () => {
-    document.querySelector('.tab.components').click();
-    document.querySelector('input.css').setAttribute('checked','checked');
+  document.querySelector('.tab.components').click();
+  document.querySelector('input.css').setAttribute('checked', 'checked');
 });
 
 editor.on("component:remove", model => {
-  if(!editor.getComponents().length){
+  if (!editor.getComponents().length) {
     editor.setStyle('');
   }
 })
+
+editor.Commands.add('iai-replace', (editor, sender) => {
+  const modal = editor.Modal;
+  const type = editor.getSelected().get('type');
+
+  const blocks = editor.BlockManager.getAll();
+  const templates = blocks.filter(block => {
+    if (Array.isArray(block.get('content')) && block.get('content')[0].type == type) return block;
+    if (block.get('content').type === type) return block;
+  });
+  
+  const templatesEl = editor.BlockManager.render(templates, { external: true, ignoreCategories: true });
+  
+  modal.setContent(templatesEl);
+  modal.setTitle('Wybierz nowy komponent');
+
+  modal.open()
+});

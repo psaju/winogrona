@@ -155,7 +155,7 @@ editor.on('component:selected', () => {
   const replaceCommandIcon = 'icon-arrows-cw';
 
   const wrapImageCommand = 'iai-wrap';
-  const wrapImageIcon = 'icon-link';
+  const wrapImageIcon = 'icon-link-ext-alt';
 
   // get the selected componnet and its default toolbar
   const selectedComponent = editor.getSelected();

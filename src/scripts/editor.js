@@ -1,5 +1,6 @@
 import { customComponents} from "./customComponents.js";
 import {closeButtonComponents} from "./components/closeButtonComponents.js";
+import {buttonComponents} from "./components/buttonComponents.js";
 import {textVariablesComponent} from "./components/textVariablesComponent.js"
 import { templates } from "./templates.js";
 
@@ -41,6 +42,7 @@ export const editor = grapesjs.init({
     templates, 
     closeButtonComponents, 
     textVariablesComponent, 
+    buttonComponents,
     'grapesjs-plugin-forms', 
     'grapesjs-custom-code', 
     'gjs-plugin-ckeditor'

@@ -214,7 +214,6 @@ div#sidebar {
 
 .gjs-block__media {
     display: flex;
-    height: 100%;
     align-items: center;
     justify-content: center;
 }
@@ -539,6 +538,10 @@ body.loading:after {
 
 .gjs-toolbar > div {
     display: flex;
+}
+
+.modal-box {
+    background-color: #fff !important;
 }
 
 .modal-box .gjs-blocks-no-cat > div {

@@ -4,6 +4,7 @@ import {
 
 import {closeButtons} from "./blocks/closeButtons.js"
 import { textVariables } from "./blocks/textVariables.js";
+import {buttons} from "./blocks/buttons.js"
 
 const blockManager = editor.BlockManager;
 const undoManager = editor.UndoManager;
@@ -116,6 +117,7 @@ editor.Commands.add('iai-wrap', (editor, sender) => {
 editor.onReady(() => {
   closeButtons(editor);
   textVariables(editor);
+  buttons(editor);
 })
 
 
@@ -157,37 +159,45 @@ editor.on('component:selected', () => {
   const wrapImageCommand = 'iai-wrap';
   const wrapImageIcon = 'icon-link-ext-alt';
 
+  const replaceImage = 'open-assets';
+  const replaceImageIcon = 'icon-arrows-cw';
+
   // get the selected componnet and its default toolbar
   const selectedComponent = editor.getSelected();
-  const defaultToolbar = selectedComponent.get('toolbar');
+  let defaultToolbar = selectedComponent.get('toolbar');
   const type = selectedComponent.get('type');
 
   // check if this command already exists on this component toolbar
   const replaceCommandExists = defaultToolbar.some(item => item.command === replaceCommand);
   const wrapCommandExists = defaultToolbar.some(item => item.command === wrapImageCommand);
+  const replaceImageCommandExists = defaultToolbar.some(item => item.command === replaceImage);
   const hasReplaceAttribute = selectedComponent.getTrait('replacable');
+
   // if it doesn't already exist, add it
   if (!replaceCommandExists && hasReplaceAttribute) {
+    defaultToolbar = [...defaultToolbar, {
+      attributes: {
+        class: replaceCommandIcon
+      },
+      command: replaceCommand
+    }];
+
     selectedComponent.set({
-      toolbar: [...defaultToolbar, {
-        attributes: {
-          class: replaceCommandIcon
-        },
-        command: replaceCommand
-      }]
+      toolbar: defaultToolbar
     });
   }
 
 
   if(!wrapCommandExists && type == 'image' && selectedComponent.parent().get('type') !== 'link'){
+    defaultToolbar = [...defaultToolbar, {
+      attributes: {
+        class: wrapImageIcon
+      },
+      command: wrapImageCommand
+    }];
 
     selectedComponent.set({
-      toolbar: [...defaultToolbar, {
-        attributes: {
-          class: wrapImageIcon
-        },
-        command: wrapImageCommand
-      }]
+      toolbar: defaultToolbar
     });
   }
 
@@ -198,7 +208,18 @@ editor.on('component:selected', () => {
     });
   }
 
+  if(type == 'image' && !replaceImageCommandExists){
+    defaultToolbar = [...defaultToolbar, {
+      attributes: {
+        class: replaceImageIcon
+      },
+      command: replaceImage
+    }];
 
+    selectedComponent.set({
+      toolbar: defaultToolbar
+    });
+  }
 
 });
 

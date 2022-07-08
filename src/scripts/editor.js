@@ -356,7 +356,8 @@ export const editor = grapesjs.init({
           },
           {
             property: 'border-style',
-            label: ' '
+            label: ' ',
+            default: 'none'
           },
           {
             property: 'border-color',

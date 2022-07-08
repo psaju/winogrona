@@ -291,12 +291,10 @@ function addBasicTraits(){
 
   setTimeout(function(){
     const tpl = `
-    <div id="basic-traits" class="flex justify-center items-center gap-3 h-full">
+    <div id="basic-traits" class="flex justify-center items-end gap-3 h-full">
       ${traits.filter(t => !excluded.includes(t.attributes.name)).map(trait => {
         return `<div>
-          <label class="label">
-            <span class="label-text">${trait.attributes.name}</span>
-          </label>
+          ${trait.get('type') !== 'button' ? `<label class="label"><span class="label-text">${trait.attributes.name}</span></label>` : ``}
           ${getInput(trait.el.outerHTML, trait.attributes.value, trait.attributes.name)}
         </div>`
       }).join('')}

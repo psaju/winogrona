@@ -643,6 +643,7 @@ div#swap-sidebar .gjs-block .gjs-block-label {
     z-index: 1;
     left: 20px;
     right: 20px;
+    align-items: start;
 }
 
 #basic-style .gjs-sm-properties {
@@ -806,8 +807,12 @@ div#basic-style .label {
 }
 
 div#basic-style [class*="btn-"] {
-    height: 40px;
     padding: 0.25rem 2rem;
+    min-width: 128px;
+}
+
+div#basic-traits {
+    padding: 10px 5px;
 }
 
 div#basic-traits div {
@@ -815,14 +820,24 @@ div#basic-traits div {
 }
 
 div#basic-traits div .label {
-    margin: 0;
-    padding: 10px;
-    background: #f00;
+    background: hsl(var(--p));
     color: #fff;
+    padding: 10px;
+    border-radius: var(--br);
+    box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 div#basic-traits div .label .label-text {
      padding: 10px;
-    background: #f00;
+    background: hsl(var(--p));
     color: #fff;
+    border-radius: var(--br);
+}
+
+div#basic-traits :where(input, label, button, select) {
+    height: 39px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }

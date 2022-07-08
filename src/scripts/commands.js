@@ -73,11 +73,6 @@ editor.Commands.add("open-assets", {
   },
 });
 
-editor.on("component:selected", () => {
-  document.querySelector('.tab.components').click();
-  document.querySelector('input.css').setAttribute('checked', 'checked');
-});
-
 editor.on("component:remove", model => {
   if (!editor.getComponents().length) {
     editor.setStyle('');
@@ -85,8 +80,9 @@ editor.on("component:remove", model => {
 })
 
 editor.Commands.add('iai-replace', (editor, sender) => {
-  const modal = editor.Modal;
+  const sidebar = document.querySelector('#swap-sidebar');
   const type = editor.getSelected().get('attributes').type
+  const html = document.querySelector('html');
 
   const blocks = editor.BlockManager.getAll();
   const templates = blocks.filter(block => {
@@ -95,11 +91,17 @@ editor.Commands.add('iai-replace', (editor, sender) => {
   });
   
   const templatesEl = editor.BlockManager.render(templates, { external: true, ignoreCategories: true });
-  
-  modal.setContent(templatesEl);
-  modal.setTitle('Wybierz nowy komponent');
+  sidebar.insertAdjacentElement('afterbegin', templatesEl);
+  sidebar.dataset.type = type;
+  html.classList.add('swap-elements');
+});
 
-  modal.open()
+editor.Commands.add('iai-clearswap', (editor, sender) => {
+  const sidebar = document.querySelector('#swap-sidebar');
+  const html = document.querySelector('html');
+  sidebar.innerHTML = '';
+  html.classList.remove('swap-elements');
+
 });
 
 editor.Commands.add('iai-wrap', (editor, sender) => {
@@ -119,7 +121,6 @@ editor.onReady(() => {
   textVariables(editor);
   buttons(editor);
 })
-
 
 editor.onReady(() => {
   blockManager.getCategories().each((ctg) => ctg.set("open", false));
@@ -150,10 +151,12 @@ editor.on('modal', (props) => {
 // like in const editor = grapesjs.init({ ...config });
 editor.on('component:selected', () => {
 
+  addBasicTraits();
   // whenever a component is selected in the editor
 
   // set your command and icon here
   const replaceCommand = 'iai-replace';
+  const clearSwap = 'iai-clearswap';
   const replaceCommandIcon = 'icon-arrows-cw';
 
   const wrapImageCommand = 'iai-wrap';
@@ -165,7 +168,9 @@ editor.on('component:selected', () => {
   // get the selected componnet and its default toolbar
   const selectedComponent = editor.getSelected();
   let defaultToolbar = selectedComponent.get('toolbar');
-  const type = selectedComponent.get('type');
+  const type = selectedComponent.get('type');;
+  const swapType = document.querySelector('#swap-sidebar').dataset?.type;
+  
 
   // check if this command already exists on this component toolbar
   const replaceCommandExists = defaultToolbar.some(item => item.command === replaceCommand);
@@ -174,17 +179,11 @@ editor.on('component:selected', () => {
   const hasReplaceAttribute = selectedComponent.getTrait('replacable');
 
   // if it doesn't already exist, add it
-  if (!replaceCommandExists && hasReplaceAttribute) {
-    defaultToolbar = [...defaultToolbar, {
-      attributes: {
-        class: replaceCommandIcon
-      },
-      command: replaceCommand
-    }];
-
-    selectedComponent.set({
-      toolbar: defaultToolbar
-    });
+  if (hasReplaceAttribute && (type !== swapType || typeof swapType == 'undefined')) {
+    editor.runCommand(clearSwap);
+    editor.runCommand(replaceCommand);
+  } else if (!hasReplaceAttribute) {
+    editor.runCommand(clearSwap);
   }
 
 
@@ -255,3 +254,102 @@ editor.onReady(() => {
   document.getElementById('blocks-temp').remove()
 });
 
+editor.onReady(() => {
+  const basicStyle = document.querySelector('.gjs-sm-sector__basic').querySelector(' .gjs-sm-properties');
+  const basicStyleBar = document.querySelector('#basic-style');
+
+  const selects = basicStyle.querySelectorAll('select');
+  const inputs = basicStyle.querySelectorAll('input');
+
+  [...basicStyle.querySelectorAll('.gjs-sel-arrow')].forEach(function(el){
+    el.remove();
+  });
+
+  [...selects].forEach(function(el){
+    el.classList.add('select');
+  });
+
+  [...inputs].forEach(function(el){
+    el.classList.add('input');
+  });
+
+
+  basicStyleBar.insertAdjacentElement('afterbegin', basicStyle);
+  document.querySelector('.gjs-sm-sector__basic').remove();
+});
+
+// TODO - Add RTE action
+/*
+const rte = editor.RichTextEditor;
+rte.actions[0].result(rte.globalRte)
+*/
+
+function addBasicTraits(){
+  const traits = editor.getSelected().getTraits();
+  const excluded = ['type', 'required', 'replaceable', 'checked'];
+  const container = document.querySelector('#basic-trait-container');
+
+  setTimeout(function(){
+    const tpl = `
+    <div id="basic-traits" class="flex justify-center items-center gap-3 h-full">
+      ${traits.filter(t => !excluded.includes(t.attributes.name)).map(trait => {
+        return `<div>
+          <label class="label">
+            <span class="label-text">${trait.attributes.name}</span>
+          </label>
+          ${getInput(trait.el.outerHTML, trait.attributes.value, trait.attributes.name)}
+        </div>`
+      }).join('')}
+    </div>
+  `;
+    
+  container.innerHTML = tpl;
+
+  }, 100);
+  
+
+};
+
+function getInput(traitHtml, traitValue, traitType){
+  let traitEl = document.createElement('div');
+  traitEl.innerHTML = traitHtml;
+  traitEl.firstChild.setAttribute('value', traitValue);
+  traitEl.firstChild.dataset.type = traitType;
+
+  if (traitEl.querySelector('button')){
+    traitEl.querySelector('button').classList.add('btn-primary');
+  }
+
+  if (traitEl.querySelector('input')){
+    traitEl.querySelector('input').classList.add('input');
+  }
+
+  return traitEl.firstChild.outerHTML;
+}
+
+document.addEventListener('change', function(event) {
+  if (event.target.matches('#basic-traits :where(input, select)')) {
+    event.preventDefault();
+    
+    const input = event.target;
+    const value = input.value;
+    const component = editor.getSelected();
+    const type = input.dataset.type;
+
+    let newObj = {};
+    newObj[type] = value;
+
+    component.addAttributes(newObj)
+
+  }
+}, false);
+
+document.addEventListener('click', function(event) {
+  if (event.target.matches('#basic-traits :where(button)')) {
+    event.preventDefault();
+
+    const button = event.target;
+    const type = button.dataset.type;
+    editor.getSelected().getTrait(type).view.el.querySelector('button').click()
+  }
+}, false);

@@ -60,15 +60,14 @@ export const buttonComponents = (editor) => {
                 box-shadow: #3c4fe0 0 3px 7px inset;
                 transform: translateY(2px);
               }`,
-      },
       traits: [
-        "link",
         {
           name: "replacable",
           type: "checkbox",
           label: "replacable",
-        }
+        },
       ],
+    },
     },
   });
 

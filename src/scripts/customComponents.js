@@ -1,4 +1,5 @@
 export const customComponents = (editor) => {
+
   editor.DomComponents.addType("popup-wrapper", {
     isComponent: (el) => el.tagName === "popup-wrapper",
     // Model definition

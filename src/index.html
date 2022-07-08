@@ -14,7 +14,7 @@
     <span class="loader"></span>
 
     <div id="content" class="flex">
-      <div class="w-9/12">
+      <div class="w-9/12 relative">
         <div id="panel" class="flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <div class="panel__devices">
@@ -30,36 +30,44 @@
           
         </div>
         <div id="gjs" class="gjs"></div>
+        <div id="swap-sidebar"></div>
+        <div id="basic-style">
+          
+          <div id="basic-trait-container"></div>
+        </div>
       </div>
 
-      <div id="sidebar" class="w-3/12">
+      <div id="sidebar" class="w-3/12" data-type="">
+        <div>
         <div class="panel__tabs flex">
-            <a class="tab btn active flex-1 templates icon" onclick="openTab(event, 'templates')">Szablon</a>
+            <a class="tab btn active flex-1 templates icon" onclick="openTab(event, 'templates')">Szablony</a>
             <a class="tab btn flex-1 components icon" onclick="openTab(event, 'blocks')">Komponenty</a>
+            <a class="tab btn flex-initial settings icon" onclick="openTab(event, 'settings')"></a>
         </div>
 
         <div id="templates" class="tabcontent" style="display: block"></div>
 
         <div id="blocks" class="tabcontent">
             <div id="blockmanager"></div>
-            <div id="stylemanager-wrapper" class="collapse collapse-arrow">
-                <input type="checkbox" class="peer css"/> 
-                <div class="collapse-title peer-checked:bg-white">
-                  <div class="c_heading">
-                    Zaawansowane ustawienia CSS
-                  </div>
-                </div>
-                <div class="collapse-content peer-checked:bg-white"> 
-                    
-                    <div id="style-manager">
-                        <div id="selector-container"></div>
-                        <div id="trait-container"></div>
-                    </div>
-                </div>
+        </div>
+
+        <div id="settings" class="tabcontent">
+          <div id="trait-container"></div>
+          <div id="stylemanager-wrapper">
+            <div>
+              <div class="c_heading">
+                Zaawansowane ustawienia CSS
+              </div>
             </div>
+            <div> 
+              <div id="selector-container"></div>
+                <div id="style-manager"></div>
+            </div>
+        </div>
         </div>
         
         <div class="panel__save w-full"></div>
+      </div>
       </div>
     </div>
 

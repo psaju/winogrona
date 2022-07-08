@@ -1,16 +1,35 @@
 import { editor } from "./editor.js";
 
 const blockManager = editor.BlockManager;
+const dc = editor.DomComponents;
 
-blockManager.add("big_label", {
-    label: "Heading",
-    content: '<h2>Heading</h2>',
-    category: 'basic',
-    attributes: {
-      title: "Dodaj nagłówek h2",
+// Dodawanie nowych atrybutów/przycisków
+dc.addType('image', {
+  extendFn: ['updateTraits'],
+  model: {
+    init() {
+      this.addTraits();
     },
-    media: '<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512"><path id="_x33_4.Heading" d="m456 89.333v333.333h33.333c9.205 0 16.667 7.462 16.667 16.667v33.333c0 9.205-7.462 16.667-16.667 16.667h-166.666c-9.205 0-16.667-7.462-16.667-16.667v-33.333c0-9.205 7.462-16.667 16.667-16.667h33.333v-133.333h-200v133.333h33.333c9.205 0 16.667 7.462 16.667 16.667v33.333c0 9.205-7.462 16.667-16.667 16.667h-166.666c-9.205 0-16.667-7.462-16.667-16.666v-33.333c0-9.205 7.462-16.667 16.667-16.667h33.333v-333.334h-33.333c-9.205 0-16.667-7.462-16.667-16.666v-33.334c0-9.205 7.462-16.667 16.667-16.667h166.667c9.205 0 16.667 7.462 16.667 16.667v33.333c0 9.205-7.462 16.667-16.667 16.667h-33.334v133.333h200v-133.333h-33.333c-9.205 0-16.667-7.462-16.667-16.667v-33.333c0-9.205 7.462-16.667 16.667-16.667h166.667c9.205 0 16.667 7.462 16.667 16.667v33.333c0 9.205-7.462 16.667-16.667 16.667z"/></svg>'
-  });
+    updateTraits() {
+      this.addTraits();
+    },
+    addTraits() {
+      if(!this.getTrait('replace')){
+        this.addTrait({
+          type: 'button',
+          name: 'replace',
+          text: 'Dodaj grafikę',
+          label: 'replace',
+          command: editor => {
+            editor.runCommand('open-assets');
+          }
+        })
+      }
+    }
+  }
+})
+
+// Dodawanie komponentów
 
   blockManager.add("link", {
     label: "Link",

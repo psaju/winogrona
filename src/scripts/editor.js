@@ -33,6 +33,12 @@ export const editor = grapesjs.init({
     .gjs-plh-image {
       outline: none;
     }
+    body {
+      background: white;
+      background-image: radial-gradient(#dadada 1px, transparent 0);
+      background-size: 20px 20px;
+      background-position: -19px -19px;
+    }
 `,
   selectorManager: {
     componentFirst: true
@@ -45,7 +51,7 @@ export const editor = grapesjs.init({
     buttonComponents,
     'grapesjs-plugin-forms', 
     'grapesjs-custom-code', 
-    'gjs-plugin-ckeditor'
+    // 'gjs-plugin-ckeditor'
   ],
   pluginsOpts: {
     'grapesjs-custom-code': {
@@ -60,34 +66,34 @@ export const editor = grapesjs.init({
       modalTitle: 'Umieść własny kod',
       buttonLabel: 'Zapisz'
     },
-    'gjs-plugin-ckeditor': {
-      position: 'center',
-      options: {
-        startupFocus: true,
-        extraAllowedContent: '*(*);*{*}', // Allows any class and any inline style
-        allowedContent: true, // Disable auto-formatting, class removing, etc.
-        enterMode: CKEDITOR.ENTER_BR,
-        extraPlugins: 'sharedspace,justify,colorbutton,panelbutton,font',
-        toolbar: [{
-            name: 'styles',
-            items: ['Font', 'FontSize']
-          },
-          ['Bold', 'Italic', 'Underline', 'Strike'],
-          {
-            name: 'paragraph',
-            items: ['NumberedList', 'BulletedList']
-          },
-          {
-            name: 'links',
-            items: ['Link', 'Unlink']
-          },
-          {
-            name: 'colors',
-            items: ['TextColor', 'BGColor']
-          },
-        ],
-      }
-    }
+    // 'gjs-plugin-ckeditor': {
+    //   position: 'center',
+    //   options: {
+    //     startupFocus: true,
+    //     extraAllowedContent: '*(*);*{*}', 
+    //     allowedContent: true, 
+    //     enterMode: CKEDITOR.ENTER_BR,
+    //     extraPlugins: 'sharedspace,justify,colorbutton,panelbutton,font',
+    //     toolbar: [{
+    //         name: 'styles',
+    //         items: ['Font', 'FontSize']
+    //       },
+    //       ['Bold', 'Italic', 'Underline', 'Strike'],
+    //       {
+    //         name: 'paragraph',
+    //         items: ['NumberedList', 'BulletedList']
+    //       },
+    //       {
+    //         name: 'links',
+    //         items: ['Link', 'Unlink']
+    //       },
+    //       {
+    //         name: 'colors',
+    //         items: ['TextColor', 'BGColor']
+    //       },
+    //     ],
+    //   }
+    // }
   },
   panels: {
     defaults: [{
@@ -187,7 +193,8 @@ export const editor = grapesjs.init({
   },
   styleManager: {
     appendTo: "#style-manager",
-    sectors: [{
+    sectors: [
+      {
         name: "Ogólne",
         open: false,
         buildProps: [
@@ -245,7 +252,6 @@ export const editor = grapesjs.init({
           "background",
         ],
       },
-
       {
         name: "Dodatkowe",
         open: false,
@@ -258,6 +264,105 @@ export const editor = grapesjs.init({
           max: 1,
           min: 0,
         }, ],
+      },
+      {
+        name: "Basic",
+        open: true,
+        buildProps: [
+          "font-family",
+          "font-size",
+          "font-weight",
+          "color",
+          "background-color",
+          "text-align",
+          "border-width",
+          "border-color",
+          "border-style"
+        ],
+        properties: [
+          {
+            type: 'select',
+            property: 'font-family',
+            default: 'Arial, Helvetica, sans-serif',
+            label: ' '
+          },
+          {
+            type: 'select',
+            property: 'font-size',
+            default: '14px',
+            label: ' ',
+            options: [
+              {id: '10px', label: '10px'},
+              {id: '12px', label: '12px'},
+              {id: '14px', label: '14px'},
+              {id: '16px', label: '16px'},
+              {id: '18px', label: '18px'},
+              {id: '20px', label: '20px'},
+              {id: '22px', label: '22px'},
+              {id: '24px', label: '24px'},
+              {id: '26px', label: '26px'},
+              {id: '28px', label: '28px'},
+              {id: '36px', label: '36px'},
+              {id: '48px', label: '48px'},
+              {id: '72px', label: '72px'},
+            ]
+          },
+          {
+            type: 'radio',
+            property: 'text-align',
+            default: 'left',
+            options: [
+              {
+                id: 'left', 
+                label: `<svg xmlns="http://www.w3.org/2000/svg" width="13.134" height="13.134" viewBox="0 0 13.134 13.134"><path d="M.376,11.631H8.067a.376.376,0,0,0,.376-.376V10.131a.376.376,0,0,0-.376-.376H.376A.376.376,0,0,0,0,10.131v1.124a.376.376,0,0,0,.376.376Zm0-7.5H8.067a.376.376,0,0,0,.376-.376V2.626a.376.376,0,0,0-.376-.376H.376A.376.376,0,0,0,0,2.626V3.75a.376.376,0,0,0,.376.376ZM12.665,6H.469A.469.469,0,0,0,0,6.472V7.41a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469V6.472A.469.469,0,0,0,12.665,6Zm0,7.5H.469A.469.469,0,0,0,0,13.977v.938a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469v-.938A.469.469,0,0,0,12.665,13.507Z" transform="translate(0 -2.25)"/></svg>`
+              },
+              {
+                id: 'right', 
+                label: '<svg xmlns="http://www.w3.org/2000/svg" width="13.134" height="13.134" viewBox="0 0 13.134 13.134"><path d="M.469,7.879h12.2a.469.469,0,0,0,.469-.469V6.472A.469.469,0,0,0,12.665,6H.469A.469.469,0,0,0,0,6.472V7.41a.469.469,0,0,0,.469.469Zm12.2,5.629H.469A.469.469,0,0,0,0,13.977v.938a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469v-.938A.469.469,0,0,0,12.665,13.507ZM12.758,2.25H5.067a.376.376,0,0,0-.376.376V3.75a.376.376,0,0,0,.376.376h7.691a.376.376,0,0,0,.376-.376V2.626a.376.376,0,0,0-.376-.376Zm0,7.5H5.067a.376.376,0,0,0-.376.376v1.124a.376.376,0,0,0,.376.376h7.691a.376.376,0,0,0,.376-.376V10.131a.376.376,0,0,0-.376-.376Z" transform="translate(0 -2.25)"/></svg>'
+              },
+              {
+                id: 'justify', 
+                label: '<svg xmlns="http://www.w3.org/2000/svg" width="13.134" height="13.134" viewBox="0 0 13.134 13.134"><path d="M12.665,13.507H.469A.469.469,0,0,0,0,13.977v.938a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469v-.938A.469.469,0,0,0,12.665,13.507Zm0-3.752H.469A.469.469,0,0,0,0,10.224v.938a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469v-.938A.469.469,0,0,0,12.665,9.755Zm0-3.752H.469A.469.469,0,0,0,0,6.472V7.41a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469V6.472A.469.469,0,0,0,12.665,6Zm0-3.752H.469A.469.469,0,0,0,0,2.719v.938a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469V2.719A.469.469,0,0,0,12.665,2.25Z" transform="translate(0 -2.25)"/></svg>'
+              },
+              {
+                id: 'center', 
+                label: '<svg xmlns="http://www.w3.org/2000/svg" width="13.134" height="13.134" viewBox="0 0 13.134 13.134"><path d="M12.665,6H.469A.469.469,0,0,0,0,6.472V7.41a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469V6.472A.469.469,0,0,0,12.665,6Zm0,7.5H.469A.469.469,0,0,0,0,13.977v.938a.469.469,0,0,0,.469.469h12.2a.469.469,0,0,0,.469-.469v-.938A.469.469,0,0,0,12.665,13.507Zm-9.5-9.381h6.8a.354.354,0,0,0,.354-.355V2.6a.354.354,0,0,0-.354-.354h-6.8a.354.354,0,0,0-.355.354V3.772A.355.355,0,0,0,3.169,4.126Zm6.8,7.5a.354.354,0,0,0,.354-.355V10.109a.354.354,0,0,0-.354-.354h-6.8a.354.354,0,0,0-.355.354v1.167a.355.355,0,0,0,.355.355Z" transform="translate(0 -2.25)"/></svg>'
+              },
+            ]
+          },
+          {
+            type: 'color',
+            property: 'background-color',
+            default: '#000000',
+            label: 'Kolor tła'
+          },
+          {
+            type: 'color',
+            property: 'color',
+            default: '#000000',
+            label: 'Kolor tekstu'
+          },
+          {
+            property: 'font-weight',
+            label: ' '
+          },
+          {
+            property: 'text-align',
+            label: ' '
+          },
+          {
+            property: 'border-width',
+            label: ' '
+          },
+          {
+            property: 'border-style',
+            label: ' '
+          },
+          {
+            property: 'border-color',
+            label: 'Kolor ramki'
+          }
+        ]
       },
     ],
   },
